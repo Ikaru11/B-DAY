@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Operation: Fathir — Tactical Birthday Invite</title>
+
+<!-- Optional: change or remove font links if offline -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0e1110;
+    --panel:#0f1a17;
+    --accent:#9fbf6b; /* olive green */
+    --accent-2:#c9d9a8;
+    --muted:#a7b19a;
+    --text:#eaf0e6;
+    --glass: rgba(255,255,255,0.03);
+    --card-radius:12px;
+    --max-width:900px;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family:"Montserrat",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(159,191,107,0.06), transparent 10%),
+      radial-gradient(1000px 500px at 90% 90%, rgba(201,217,168,0.03), transparent 10%),
+      var(--bg);
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px;
+  }
+
+  .container{
+    width:100%;
+    max-width:var(--max-width);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.04);
+    padding:28px;
+    border-radius:14px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    display:grid;
+    grid-template-columns: 1fr 380px;
+    gap:20px;
+  }
+
+  /* Left: mission text */
+  .briefing{
+    padding:20px;
+    background: linear-gradient(180deg, var(--panel), rgba(15,26,23,0.85));
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.03);
+    position:relative;
+    overflow:hidden;
+  }
+
+  .header{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    margin-bottom:14px;
+  }
+  .badge{
+    width:68px;
+    height:68px;
+    background:linear-gradient(145deg, rgba(159,191,107,0.2), rgba(159,191,107,0.08));
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px dashed rgba(159,191,107,0.25);
+  }
+  .badge svg{width:40px; height:40px; fill:var(--accent);}
+
+  h1{
+    margin:0;
+    font-family:"Roboto Slab", serif;
+    font-size:20px;
+    letter-spacing:0.6px;
+    color:var(--accent);
+    text-transform:uppercase;
+  }
+  .subtitle{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+
+  .meta{
+    display:flex;
+    gap:8px;
+    margin:18px 0;
+    flex-wrap:wrap;
+  }
+
+  .meta .chip{
+    background:var(--glass);
+    border:1px solid rgba(255,255,255,0.03);
+    padding:8px 10px;
+    border-radius:8px;
+    font-size:13px;
+    color:var(--accent-2);
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+
+  .mission-text{
+    font-size:15px;
+    line-height:1.6;
+    color:var(--text);
+    background: linear-gradient(transparent, rgba(255,255,255,0.01));
+    padding:10px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.02);
+  }
+
+  .mission-text .guest{
+    color:var(--accent);
+    font-weight:700;
+  }
+
+  /* Right: details card */
+  .card{
+    padding:18px;
+    background:linear-gradient(180deg,#0b130f,#0c1b16);
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.03);
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    align-items:stretch;
+  }
+
+  .card .row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+  }
+  .label{
+    font-size:12px;
+    color:var(--muted);
+  }
+  .value{
+    font-weight:700;
+    color:var(--text);
+    font-size:15px;
+  }
+
+  .coords{
+    font-family: monospace;
+    font-size:13px;
+    color:var(--muted);
+    background:rgba(255,255,255,0.02);
+    padding:8px;
+    border-radius:6px;
+    border:1px dashed rgba(255,255,255,0.02);
+  }
+
+  .actions{
+    margin-top:10px;
+    display:flex;
+    gap:10px;
+  }
+  button{
+    cursor:pointer;
+    border:0;
+    padding:10px 12px;
+    border-radius:8px;
+    font-weight:700;
+    background:transparent;
+    color:var(--text);
+    border:1px solid rgba(255,255,255,0.04);
+  }
+  button.primary{
+    background: linear-gradient(90deg,var(--accent), #d2e09a);
+    color:#07210a;
+    border:0;
+  }
+
+  .footer{
+    margin-top:12px;
+    font-size:13px;
+    color:var(--muted);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+
+  /* small screens */
+  @media (max-width:880px){
+    .container{ grid-template-columns: 1fr; padding:18px; }
+    .card{ order:2; }
+    .briefing{ order:1; }
+  }
+
+  /* decorative stripes */
+  .stripes{
+    position:absolute;
+    right:-60px;
+    top:-40px;
+    width:220px;
+    height:220px;
+    opacity:0.06;
+    transform:rotate(25deg);
+    background:
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0 8px, transparent 8px 16px);
+    border-radius:20px;
+  }
+
+  /* small note */
+  .note{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:8px;
+  }
+
+  /* printable tweaks */
+  @media print{
+    body{ background:#fff; color:#000; }
+    .container{ box-shadow:none; border:0; }
+    a, button{ display:none; }
+  }
+
+</style>
+</head>
+
+<body>
+  <div class="container" id="invite-root">
+
+    <!-- LEFT: Briefing -->
+    <div class="briefing">
+      <div class="header">
+        <div class="badge" aria-hidden="true">
+          <!-- small mission emblem -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 2l2.6 6.9L21 10l-5 3.7L17.2 20 12 16.6 6.8 20 8 13.7 3 10l6.4-1.1L12 2z"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Operation: Fathir — Tactical Briefing</h1>
+          <div class="subtitle">Classified — For Assigned Agents Only</div>
+        </div>
+      </div>
+
+      <div class="meta" aria-hidden="false">
+        <div class="chip">Priority: <strong style="color:var(--accent); margin-left:6px;">Top Secret</strong></div>
+        <div class="chip">Mission Code: <strong style="color:var(--accent); margin-left:6px;">BIRTHDAY-∞</strong></div>
+        <div class="chip">Attendance: Mandatory</div>
+      </div>
+
+      <div class="mission-text" id="missionText">
+        Agent <span class="guest" id="guestName">[Guest’s Name]</span>,<br><br>
+
+        You are formally assigned to <strong>Operation Fathir’s Birthday</strong> — a covert but celebratory gathering
+        commemorating another successful year of life and missions accomplished. Your role is simple: arrive on time,
+        support morale, and help ensure the mission is a resounding success.<br><br>
+
+        Arrival Time: <strong>1700 Hours (5:00 PM)</strong><br>
+        Location: Refer to the briefing panel on the right for coordinates and dress code.<br><br>
+
+        Bring your best spirit and be prepared for light refreshments and confidential festivities. This is a tactical
+        celebration — sharp looks and steady resolve recommended.<br><br>
+
+        — Commanding Officer,<br>
+        <strong>Fathir</strong>
+      </div>
+
+      <div class="stripes" aria-hidden="true"></div>
+    </div>
+
+    <!-- RIGHT: Info Card -->
+    <aside class="card" role="complementary" aria-label="Mission Details">
+      <div class="row">
+        <div>
+          <div class="label">Operation Name</div>
+          <div class="value">Birthday Celebration — Fathir</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="label">Status</div>
+          <div class="value" style="color:var(--accent);">Classified</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="label">Date</div>
+          <div class="value" id="dateValue">[18-03-2025]</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="label">Time</div>
+          <div class="value">1700 Hours (5:00 PM)</div>
+        </div>
+        <div>
+          <div class="label">Dress Code</div>
+          <div class="value">Tactical Casual / Formal Black</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="label">Venue / Coordinates</div>
+        <div class="coords" id="venueValue">[Venue or Address]</div>
+      </div>
+
+      <div class="actions">
+        <button class="primary" id="printBtn">Print / Save as PDF</button>
+        <button id="copyBtn">Copy Text</button>
+        <button id="editBtn">Edit Info</button>
+      </div>
+
+      <div class="note">Tip: Click "Edit Info" to customize Guest Name, Date, or Venue. Use Print to save a PDF copy.</div>
+
+      <div class="footer">
+        <div>Symbol of love: ∞</div>
+        <div style="font-size:12px; color:var(--muted)">Prepared by: Fathir</div>
+      </div>
+    </aside>
+
+  </div>
+
+<script>
+  // Basic interactivity: edit fields, copy content, print
+  (function(){
+    const guestEl = document.getElementById('guestName');
+    const dateEl = document.getElementById('dateValue');
+    const venueEl = document.getElementById('venueValue');
+    const missionText = document.getElementById('missionText');
+
+    document.getElementById('editBtn').addEventListener('click', () => {
+      const guest = prompt('Enter guest name:', guestEl.textContent === '[My friends]' ? '' : guestEl.textContent) || '[Guest’s Name]';
+      guestEl.textContent = guest;
+
+      const date = prompt('Enter date (e.g., June 3, 2025):', dateEl.textContent === '[Your Birthday Date]' ? '' : dateEl.textContent) || '[Your Birthday Date]';
+      dateEl.textContent = date;
+
+      const venue = prompt('Enter venue/address:', venueEl.textContent === '[Venue or Address]' ? '' : venueEl.textContent) || '[Venue or Address]';
+      venueEl.textContent = venue;
+
+      // Update mission snippet for consistency
+      // (keeps time constant at 1700 Hours)
+      missionText.innerHTML = `
+        Agent <span class="guest">${guest}</span>,<br><br>
+
+        You are formally assigned to <strong>Operation Fathir’s Birthday</strong> — a covert but celebratory gathering
+        commemorating another successful year of life and missions accomplished. Your role is simple: arrive on time,
+        support morale, and help ensure the mission is a resounding success.<br><br>
+
+        Arrival Time: <strong>1700 Hours (5:00 PM)</strong><br>
+        Date: <strong>${date}</strong><br>
+        Location: Refer to the briefing panel on the right for coordinates and dress code.<br><br>
+
+        Bring your best spirit and be prepared for light refreshments and confidential festivities. This is a tactical
+        celebration — sharp looks and steady resolve recommended.<br><br>
+
+        — Commanding Officer,<br>
+        <strong>Fathir</strong>
+      `;
+    });
+
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      try{
+        const text = `Operation: Fathir — Tactical Briefing\n\n` +
+          missionText.innerText.replace(/\n\s+/g, '\n') + '\n\n' +
+          `Date: ${dateEl.textContent}\nTime: 1700 Hours (5:00 PM)\nVenue: ${venueEl.textContent}\n\n` +
+          `— Fathir`;
+        await navigator.clipboard.writeText(text);
+        alert('Mission briefing text copied to clipboard ✅');
+      }catch(e){
+        alert('Could not copy automatically. You can select and copy manually.');
+      }
+    });
+
+    document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+    // Small accessibility: allow editing by double-click on fields
+    guestEl.addEventListener('dblclick', () => document.getElementById('editBtn').click());
+    venueEl.addEventListener('dblclick', () => document.getElementById('editBtn').click());
+
+  })();
+</script>
+</body>
+</html>
